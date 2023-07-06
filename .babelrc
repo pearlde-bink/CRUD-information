@@ -1,0 +1,7 @@
+//babel is used to conver our code to older version of code
+// so that it can run in browsers which execute old syntax of code
+{
+    "presets": [
+        "@babel/preset-env"
+    ]
+}
