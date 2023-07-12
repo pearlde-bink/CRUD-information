@@ -9,14 +9,16 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
+    <!-- navigation -->
     <div class="topnav">
-        <a class = "active" href="#home">Home</a>
+        <a class = "active" href="#home">Home</a> <!--href attribute specifies an url of page the link go -->
         <a href="#news">News</a>
         <a href="#contact">Contact</a>
-        <a href="#about">About</a>
+        <a href="/upload">Upload file</a>
     </div>
 
-    <div>
+    <div> 
+        <!-- user's table -->
         <div class = "w3-container">
             <h2>List users tables</h2>
             <table class="w3-table-all w3-hoverable">
@@ -55,6 +57,7 @@
             </table>
         </div>
 
+        <!-- create new user -->
         <div class = 'create-user-container'>
             <form action="/create-new-user" method="POST">
                 <div><b>Create a new user:</b></div>

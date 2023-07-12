@@ -3,6 +3,7 @@ import express from 'express';
 import configViewEngine from './configs/viewEngine';
 import initWebRoute from './route/web';
 import connection from './configs/connectDB';
+import initAPIRoute from './route/api';
 
    
 const path = require('path');
@@ -25,6 +26,9 @@ configViewEngine(app);
 
 //init web route
 initWebRoute(app);
+
+//init API route
+initAPIRoute(app);
 
 app.set('view cache', false);
 

@@ -56,3 +56,11 @@ label {
     margin-top: 15px;
     cursor: pointer;
 }
+
+.upload-file-container{
+    padding: 15px;
+}
+
+.upload-file-container label{
+    padding: 15px;
+}

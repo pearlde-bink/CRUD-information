@@ -1,4 +1,10 @@
 import pool from '../configs/connectDB';
+import multer from 'multer';
+
+let getHomePage = async (req, res) => {
+    const [rows, fields] = await pool.execute('SELECT * FROM users');
+    return res.render('test/newPage', {dataUser: rows});
+}
 
 let getnewPage = async (req, res) => {
     const [rows, fields] = await pool.execute('SELECT * FROM users');
@@ -55,11 +61,57 @@ let getChangePage = async (req, res) => {
 let postUpdateUser = async (req, res) => {
     let {firstName, lastName, email, address, id} = req.body;
     await pool.execute('update users set firstName = ?, lastName = ?, email = ?, address = ? where id = ?', [firstName, lastName, email, address, id]);
-    console.log('check request: ', req.body)
+    // console.log('check request: ', req.body)
     return res.redirect('/newPage')
 }
 
+let getUploadFilePage = async (req, res) => {
+    return res.render('test/upload')
+}
+
+// const upload = multer().single('profile_pic')
+// const uploadMul = multer().array('multiple_images', 3);
+
+let handleUploadFile = async (req, res) => {
+    // console.log(req.file.filename);
+    // upload(req, res, function(err) {
+        // req.file contains information of uploaded file
+        // req.body contains information of text fields, if there were any
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.file) {
+            return res.send('Please select an image to upload');
+        }
+
+        // Display uploaded image for user validation
+        res.send(`You have uploaded this image: <hr/><img src="/image/${req.file.filename}" width="400" alt = "mr Bink dep trai" style="border:5px solid black"><hr /><a href="/upload">Upload another image</a>`);
+    // });
+}
+
+let handleUploadMultipleFiles = async (req, res) => {
+    if (req.fileValidationError) {
+        return res.send(req.fileValidationError);
+    }
+    else if (!req.files) {
+        return res.send('Please select an image to upload');
+    }
+
+    let result = "You have uploaded these images: <hr />";
+    const files = req.files;
+    console.log("check req.file: ", req.files);
+    let index, len;
+    len = files.length;
+    for(index = 0; index < len; index++){
+        result += `<img src="/image/${files[index].filename}" width="300" style="margin-right: 20px;">`; 
+    }
+    result += '<hr/><a hred = "./upLoad"> Upload more images</a>';
+
+    res.send(result);
+}
+
 module.exports = {
+    getHomePage,
     getnewPage,
     getIndex,
     getabout,
@@ -68,7 +120,10 @@ module.exports = {
     createNewUser,
     deleteUser,
     getChangePage,
-    postUpdateUser
+    postUpdateUser,
+    getUploadFilePage,
+    handleUploadFile,
+    handleUploadMultipleFiles
 }
 
 
